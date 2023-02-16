@@ -1,0 +1,118 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="section_bg">
+      <form [formGroup]="editForm">
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="apr">Pool APR (%)</label>
+            <input type="number" class="form-control" id="apr" placeholder="APR" formControlName="apr">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="fees">Select Network</label>
+            <!-- <input type="input" class="form-control" id="fees" placeholder="fees" formControlName="fees"> -->
+            <select class="custom-select" formControlName="fees">
+              <option selected disabled>Select Network</option>
+              <option value=20>Ethereum Mainnet</option>
+              <option value=5>Smart Chain</option>
+              <option value=1>Polygon</option>
+              <option value=0.01>Fantom</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="investment">Principal Investment (In US$) </label>
+            <input type="number" class="form-control" id="investment" placeholder="Intial Investment" formControlName="initialInvestment">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="duration">Investment Duration (In months)</label>
+            <!-- <input type="range" [(ngModel)]="rangeValue" class="form-control" placeholder="Investment Duration" formControlName="investmentDuration"> -->
+            <input type="number" class="form-control" id="duration" placeholder="Investment Duration" formControlName="investmentDuration">
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-12">
+          <button class="btn btn-success" type="button" (click)="submit()">Submit</button>
+        </div>
+        </div>
+      </form>
+    </div>
+    </div>
+    <div class="col-md-4">
+      <div class="section_bg text-center" *ngIf="isDisplay">
+      <div class="mb-2">
+        <div class="fnt_infmnt fnt_600">{{timeToShow | number : '1.2-2'}} days</div>
+        <div class="fnt_600">Next Harvesting Time</div>
+      </div>
+      <div class="mb-2">
+        <div class="fnt_infmnt fnt_600">${{stepWiseToshow | number : '1.2-2'}}</div>
+        <div class="fnt_600">Next Harvesting Amount</div>
+      </div>
+      <div class="mb-2">
+        <div class="fnt_infmnt fnt_600">{{netApyToShow | number : '1.2-2'}}%</div>
+        <div class="fnt_600">Expected APY at end of investment time horizon</div>
+      </div>
+    </div>
+    <div class="section_bg text-center fnt_600 fnt_18" *ngIf="!isDisplay">
+      Compounding is not effective with provided data.
+    </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-5 mb-5" *ngIf="isDisplay">
+  <div class="row">
+    <div class="col-md-6">
+
+        <div class="chart_inner">
+      <div class="chart">
+        <apx-chart
+          [series]="chartOptions.series!"
+          [chart]="chartOptions.chart!"
+          [xaxis]="chartOptions.xaxis!"
+          [stroke]="chartOptions.stroke!"
+          [tooltip]="chartOptions.tooltip!"
+          [dataLabels]="chartOptions.dataLabels!"
+          [legend]="chartOptions.legend!"
+          [markers]="chartOptions.markers!"
+          [grid]="chartOptions.grid!"
+          [yaxis]="chartOptions.yaxis!"
+          [title]="chartOptions.title!"
+        ></apx-chart>
+      </div>
+      </div>
+
+    </div>
+    <div class="col-md-6">
+
+      <div class="chart_inner">
+      <div class="chart">
+        <apx-chart
+          [series]="chartOptions2.series!"
+          [chart]="chartOptions2.chart!"
+          [xaxis]="chartOptions2.xaxis!"
+          [stroke]="chartOptions2.stroke!"
+          [tooltip]="chartOptions2.tooltip!"
+          [dataLabels]="chartOptions2.dataLabels!"
+          [legend]="chartOptions2.legend!"
+          [markers]="chartOptions2.markers!"
+          [grid]="chartOptions2.grid!"
+          [yaxis]="chartOptions2.yaxis!"
+          [title]="chartOptions2.title!"
+        ></apx-chart>
+      </div>
+    </div>
+    </div>
+  </div>
+
+</div>
+
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#fff"
+  type="ball-scale-multiple"
+>
+  <p style="font-size: 20px; color: white">Loading...</p>
+</ngx-spinner>
